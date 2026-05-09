@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fumo/core/auth/auth_gate.dart';
 import 'package:fumo/core/theme/light_mode.dart' show lightMode;
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fumo/firebase_options.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MainApp());
 }
 
