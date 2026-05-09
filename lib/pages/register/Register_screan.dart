@@ -10,11 +10,11 @@ class RegisterScrean extends StatelessWidget {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  void Register(BuildContext context) {
+  Future<void> Register(BuildContext context) async {
     final auth = AuthService();
     if (passwordController.text == confirmPasswordController.text) {
       try {
-        auth.signUpWithEmailAndPassword(
+        await auth.signUpWithEmailAndPassword(
           emailController.text,
           passwordController.text,
         );
