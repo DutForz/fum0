@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fumo/components/MyIcon.dart';
 import 'package:fumo/extensions/context_extensions.dart';
 import 'package:fumo/l10n/l10n.dart';
+import 'package:fumo/pages/settings/settings_Screan.dart';
 import 'package:fumo/streams/general_stream.dart';
 
 class Mydrawer extends StatelessWidget {
@@ -25,15 +26,24 @@ class Mydrawer extends StatelessWidget {
                 child: ListTile(
                   title: Text(context.localizations.home),
                   leading: Icon(Icons.home),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16),
                 child: ListTile(
                   title: Text(context.localizations.settings),
-                  leading: Icon(Icons.settings),
-                  onTap: () {},
+                  leading: const Icon(Icons.settings),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const settings_Screan(),
+                      ),
+                    );
+                  },
                 ),
               ),
               Padding(

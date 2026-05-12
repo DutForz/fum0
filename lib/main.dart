@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fumo/core/auth/auth_gate.dart';
 import 'package:fumo/core/theme/light_mode.dart' show lightMode;
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fumo/l10n/app_localization.dart';
+import 'package:fumo/l10n/app_localizations.dart';
 import 'package:fumo/l10n/l10n.dart';
 import 'package:fumo/streams/general_stream.dart';
 
