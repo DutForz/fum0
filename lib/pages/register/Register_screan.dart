@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fumo/components/MyButton.dart';
+import 'package:fumo/components/MyIcon.dart';
 import 'package:fumo/components/MyTextField.dart';
 import 'package:fumo/core/auth/auth_service.dart';
 
@@ -41,29 +42,7 @@ class RegisterScrean extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  width: 5,
-                ),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: ClipRect(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    widthFactor: 0.7,
-                    heightFactor: 0.7,
-                    child: const Image(
-                      image: AssetImage('assets/image/giphy (2).gif'),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            Myicon(gif: 'giphy (2).gif'),
             const SizedBox(height: 100),
             Text(
               "Hi my cutie",

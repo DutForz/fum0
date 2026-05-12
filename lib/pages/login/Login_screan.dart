@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fumo/components/MyButton.dart';
+import 'package:fumo/components/MyIcon.dart';
 import 'package:fumo/components/MyTextField.dart';
 import 'package:fumo/core/auth/auth_service.dart';
 
@@ -32,29 +33,7 @@ class LoginScrean extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  width: 5,
-                ),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: ClipRect(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    widthFactor: 0.7,
-                    heightFactor: 0.7,
-                    child: const Image(
-                      image: AssetImage('assets/image/giphy.gif'),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            Myicon(gif: 'giphy.gif'),
             const SizedBox(height: 100),
             Text(
               "Welcome Back you've been missed",
