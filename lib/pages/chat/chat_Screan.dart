@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fumo/components/MyTextField.dart';
+import 'package:fumo/components/chat_bubble.dart';
 import 'package:fumo/core/auth/auth_service.dart';
 import 'package:fumo/core/chat/chat_service.dart';
 import 'package:fumo/extensions/context_extensions.dart';
@@ -27,7 +28,12 @@ class chat_Screan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(receiverEmai)),
+      appBar: AppBar(
+        title: Text(receiverEmai),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+        elevation: 0,
+      ),
       body: Column(
         children: [
           Expanded(child: _buildMessageList()),
@@ -59,24 +65,41 @@ class chat_Screan extends StatelessWidget {
 
   Widget _buildMessageItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return Text(data["message"]);
+    bool isCurrentUser = data['senderID'] == _authService.getCurrentUSer()!.uid;
+    var alignment = isCurrentUser
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
+    return Container(
+      alignment: alignment,
+      child: Column(
+        crossAxisAlignment: isCurrentUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
+        children: [
+          ChatBubble(isCurrentUser: isCurrentUser, message: data["message"]),
+        ],
+      ),
+    );
   }
 
   Widget _buildUserInput() {
-    return Row(
-      children: [
-        Expanded(
-          child: MyTextField(
-            hintText: "...",
-            Obscure: false,
-            controller: _messageController,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 50),
+      child: Row(
+        children: [
+          Expanded(
+            child: MyTextField(
+              hintText: "...",
+              Obscure: false,
+              controller: _messageController,
+            ),
           ),
-        ),
-        IconButton(
-          onPressed: sendMessage,
-          icon: const Icon(Icons.arrow_upward),
-        ),
-      ],
+          IconButton(
+            onPressed: sendMessage,
+            icon: const Icon(Icons.arrow_upward),
+          ),
+        ],
+      ),
     );
   }
 }

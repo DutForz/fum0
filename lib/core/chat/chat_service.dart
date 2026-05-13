@@ -20,9 +20,9 @@ class ChatService {
 
     Message newMessage = Message(
       message: message,
-      senderEmail: currentUserID,
+      senderEmail: currentUSerEmail,
       receiverID: receiverID,
-      senderID: currentUSerEmail,
+      senderID: currentUserID,
       timestamp: timeStamp,
     );
     List<String> ids = [currentUserID, receiverID];

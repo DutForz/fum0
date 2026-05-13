@@ -20,8 +20,14 @@ class HomeScrean extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.localizations.home),
+        title: Text(
+          context.localizations.home,
+          style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+        ),
         actions: [IconButton(onPressed: logout, icon: Icon(Icons.logout))],
+        backgroundColor: Theme.of(context).colorScheme.background,
+        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+        elevation: 0,
       ),
       drawer: Mydrawer(selectedLocale: Locale('en')),
       body: _buildUserList(),
