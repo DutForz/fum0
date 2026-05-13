@@ -1,4 +1,6 @@
 analyzer:
   errors:
+    avoid_print: ignore
     empty_constructor_bodies: ignore
+    sort_child_properties_last: ignore
 include: package:flutter_lints/flutter.yaml

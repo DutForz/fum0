@@ -11,7 +11,7 @@ class HomeScrean extends StatelessWidget {
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
 
-  void logout() {
+  void search() {
     final _auth = AuthService();
     _auth.signOut();
   }
@@ -24,7 +24,7 @@ class HomeScrean extends StatelessWidget {
           context.localizations.home,
           style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
         ),
-        actions: [IconButton(onPressed: logout, icon: Icon(Icons.logout))],
+        actions: [IconButton(onPressed: search, icon: Icon(Icons.search))],
         backgroundColor: Theme.of(context).colorScheme.background,
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,

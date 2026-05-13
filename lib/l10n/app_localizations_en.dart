@@ -22,4 +22,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loading => 'L O A D I N G .....';
+
+  @override
+  String get darkmode => 'D A R K _ M O D E';
 }

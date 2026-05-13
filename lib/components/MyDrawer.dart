@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fumo/components/MyIcon.dart';
+import 'package:fumo/core/auth/auth_service.dart';
 import 'package:fumo/extensions/context_extensions.dart';
 import 'package:fumo/l10n/l10n.dart';
 import 'package:fumo/pages/settings/settings_Screan.dart';
 import 'package:fumo/streams/general_stream.dart';
 
 class Mydrawer extends StatelessWidget {
-  const Mydrawer({super.key, required this.selectedLocale});
+  Mydrawer({super.key, required this.selectedLocale});
+  final AuthService _auth = AuthService();
+  void logout() {
+    final _auth = AuthService();
+    _auth.signOut();
+  }
+
   final Locale selectedLocale;
   @override
   Widget build(BuildContext context) {
@@ -59,6 +66,11 @@ class Mydrawer extends StatelessWidget {
                     );
                   },
                 ),
+              ),
+
+              Container(
+                child: ListTile(leading: Icon(Icons.logout), onTap: logout),
+                padding: const EdgeInsets.all(16),
               ),
             ],
           ),

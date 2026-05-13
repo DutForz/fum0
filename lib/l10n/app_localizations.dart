@@ -127,6 +127,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'L O A D I N G .....'**
   String get loading;
+
+  /// No description provided for @darkmode.
+  ///
+  /// In en, this message translates to:
+  /// **'D A R K _ M O D E'**
+  String get darkmode;
 }
 
 class _AppLocalizationsDelegate

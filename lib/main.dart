@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:fumo/core/auth/auth_gate.dart';
-import 'package:fumo/core/theme/light_mode.dart' show lightMode;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fumo/core/theme/theme_provider.dart';
 import 'package:fumo/l10n/app_localizations.dart';
 import 'package:fumo/l10n/l10n.dart';
 import 'package:fumo/streams/general_stream.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatefulWidget {
@@ -44,7 +50,7 @@ class _MainAppState extends State<MainApp> {
           supportedLocales: L10n.locals,
           home: const AuthGate(),
           debugShowCheckedModeBanner: false,
-          theme: lightMode,
+          theme: Provider.of<ThemeProvider>(context).themeData,
         );
       },
     );

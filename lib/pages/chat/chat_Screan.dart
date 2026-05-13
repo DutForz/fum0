@@ -5,8 +5,9 @@ import 'package:fumo/core/auth/auth_service.dart';
 import 'package:fumo/core/chat/chat_service.dart';
 import 'package:fumo/extensions/context_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
-class chat_Screan extends StatelessWidget {
+class chat_Screan extends StatefulWidget {
   final String receiverEmai, recieverID;
 
   chat_Screan({
@@ -14,13 +15,52 @@ class chat_Screan extends StatelessWidget {
     required this.receiverEmai,
     required this.recieverID,
   });
+
+  @override
+  State<chat_Screan> createState() => _chat_ScreanState();
+}
+
+class _chat_ScreanState extends State<chat_Screan> {
   final TextEditingController _messageController = TextEditingController();
+
   final ChatService _chatService = ChatService();
+
   final AuthService _authService = AuthService();
+
+  FocusNode myFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    myFocusNode.addListener(() {
+      if (myFocusNode.hasFocus) {
+        Future.delayed(const Duration(milliseconds: 500), () => scrollDown());
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  final ScrollController _scrollController = ScrollController();
+  void scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
 
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(recieverID, _messageController.text);
+      await _chatService.sendMessage(
+        widget.recieverID,
+        _messageController.text,
+      );
     }
     _messageController.clear();
   }
@@ -29,7 +69,7 @@ class chat_Screan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(receiverEmai),
+        title: Text(widget.receiverEmai),
         backgroundColor: Theme.of(context).colorScheme.background,
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,
@@ -46,7 +86,7 @@ class chat_Screan extends StatelessWidget {
   Widget _buildMessageList() {
     String senderId = _authService.getCurrentUSer()!.uid;
     return StreamBuilder(
-      stream: _chatService.getMessages(recieverID, senderId),
+      stream: _chatService.getMessages(widget.recieverID, senderId),
       builder: ((context, snapshot) {
         if (snapshot.hasError) {
           return Text(context.localizations.error);
@@ -55,6 +95,7 @@ class chat_Screan extends StatelessWidget {
           return Text(context.localizations.loading);
         }
         return ListView(
+          controller: _scrollController,
           children: snapshot.data!.docs
               .map((doc) => _buildMessageItem(doc))
               .toList(),
@@ -64,6 +105,7 @@ class chat_Screan extends StatelessWidget {
   }
 
   Widget _buildMessageItem(DocumentSnapshot doc) {
+    tz.initializeTimeZones();
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     bool isCurrentUser = data['senderID'] == _authService.getCurrentUSer()!.uid;
     var alignment = isCurrentUser
@@ -76,7 +118,11 @@ class chat_Screan extends StatelessWidget {
             ? CrossAxisAlignment.end
             : CrossAxisAlignment.start,
         children: [
-          ChatBubble(isCurrentUser: isCurrentUser, message: data["message"]),
+          ChatBubble(
+            isCurrentUser: isCurrentUser,
+            message: data["message"],
+            timeStamp: data["timestamp"],
+          ),
         ],
       ),
     );
@@ -89,6 +135,7 @@ class chat_Screan extends StatelessWidget {
         children: [
           Expanded(
             child: MyTextField(
+              focusNode: myFocusNode,
               hintText: "...",
               Obscure: false,
               controller: _messageController,
