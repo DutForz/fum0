@@ -58,17 +58,27 @@ class HomeScrean extends StatelessWidget {
     BuildContext context,
   ) {
     if (UserData["email"] != _authService.getCurrentUSer()) {
-      return UserTile(
-        text: UserData["email"],
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => chat_Screan(
-                receiverEmai: UserData["email"],
-                recieverID: UserData["uid"],
-              ),
-            ),
+      return StreamBuilder<String?>(
+        stream: _chatService.getLastMessage(
+          _authService.getCurrentUSer()!.uid,
+          UserData["uid"],
+        ),
+        builder: (context, snapshot) {
+          String? lastMessage = snapshot.data;
+          return UserTile(
+            text: UserData["email"],
+            lastMessage: lastMessage ?? "",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => chat_Screan(
+                    receiverEmai: UserData["email"],
+                    recieverID: UserData["uid"],
+                  ),
+                ),
+              );
+            },
           );
         },
       );

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
-  final String text;
+  final String text, lastMessage;
   final void Function()? onTap;
 
-  const UserTile({super.key, required this.onTap, required this.text});
+  const UserTile({
+    super.key,
+    required this.onTap,
+    required this.text,
+    required this.lastMessage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class UserTile extends StatelessWidget {
                 ),
 
                 Text(
-                  "test",
+                  lastMessage,
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ],

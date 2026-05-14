@@ -46,4 +46,20 @@ class ChatService {
         .orderBy("timestamp", descending: false)
         .snapshots();
   }
+
+  Stream<String?> getLastMessage(String userID, otherUserID) {
+    List<String> ids = [userID, otherUserID];
+    ids.sort();
+    String chatRoomID = ids.join('_');
+    return _firestore
+        .collection("chat_rooms")
+        .doc(chatRoomID)
+        .collection("messages")
+        .orderBy("timestamp", descending: true)
+        .limit(1)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.last.data()["message"] ?? null;
+        });
+  }
 }
