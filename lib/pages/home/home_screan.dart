@@ -84,15 +84,12 @@ class _HomeScreanState extends State<HomeScrean> {
         elevation: 0,
       ),
       drawer: Mydrawer(selectedLocale: Locale('en')),
-      body: _buildUserList(),
+      body: GestureDetector(child: _buildUserList()),
     );
   }
 
   Widget _buildUserList() {
     if (_searchController.text.isNotEmpty) {
-      if (_searchResults.isEmpty) {
-        return Center(child: Text("nothing"));
-      }
       return ListView(
         children: _searchResults
             .map((userData) => _buildUserListItem(userData, context))
@@ -129,25 +126,22 @@ class _HomeScreanState extends State<HomeScrean> {
         ),
         builder: (context, snapshot) {
           String? lastMessage = snapshot.data;
-          if (lastMessage != null) {
-            return UserTile(
-              text: UserData["email"],
-              lastMessage: lastMessage ?? "",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => chat_Screan(
-                      receiverEmai: UserData["email"],
-                      recieverID: UserData["uid"],
-                    ),
+
+          return UserTile(
+            text: UserData["email"],
+            lastMessage: lastMessage ?? "",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => chat_Screan(
+                    receiverEmai: UserData["email"],
+                    recieverID: UserData["uid"],
                   ),
-                );
-              },
-            );
-          } else {
-            return Container();
-          }
+                ),
+              );
+            },
+          );
         },
       );
     } else {
