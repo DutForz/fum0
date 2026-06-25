@@ -2,6 +2,7 @@ import 'package:fumo/data/datasources/chat_remote_datasource.dart';
 import 'package:fumo/domain/entities/message_entity.dart';
 import 'package:fumo/domain/entities/user_entity.dart';
 import 'package:fumo/domain/repositories/chat_repository.dart';
+import 'package:pointycastle/export.dart';
 
 class ChatRepositoryImpl implements ChatRepository {
   ChatRepositoryImpl({required ChatRemoteDataSource remoteDataSource})
@@ -18,10 +19,12 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<void> sendMessage({
     required String receiverId,
     required String message,
+    RSAPublicKey? recipientPublicKey,
   }) {
     return _remoteDataSource.sendMessage(
       receiverId: receiverId,
       message: message,
+      recipientPublicKey: recipientPublicKey,
     );
   }
 
@@ -29,10 +32,12 @@ class ChatRepositoryImpl implements ChatRepository {
   Stream<List<MessageEntity>> getMessages({
     required String currentUserId,
     required String otherUserId,
+    RSAPrivateKey? myPrivateKey,
   }) {
     return _remoteDataSource.getMessages(
       currentUserId: currentUserId,
       otherUserId: otherUserId,
+      myPrivateKey: myPrivateKey,
     );
   }
 
@@ -45,5 +50,15 @@ class ChatRepositoryImpl implements ChatRepository {
       currentUserId: currentUserId,
       otherUserId: otherUserId,
     );
+  }
+
+  @override
+  Future<void> savePublicKey(String userId, String encodedPublicKey) {
+    return _remoteDataSource.savePublicKey(userId, encodedPublicKey);
+  }
+
+  @override
+  Future<String?> getPublicKey(String userId) {
+    return _remoteDataSource.getPublicKey(userId);
   }
 }

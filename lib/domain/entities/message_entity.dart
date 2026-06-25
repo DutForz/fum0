@@ -8,6 +8,10 @@ class MessageEntity extends Equatable {
     required this.message,
     required this.timestamp,
     this.id,
+    // Поля для E2E шифрования
+    this.encryptedKey,
+    this.ciphertext,
+    this.iv,
   });
 
   final String? id;
@@ -17,6 +21,18 @@ class MessageEntity extends Equatable {
   final String message;
   final DateTime timestamp;
 
+  /// Зашифрованный AES-ключ (RSA-2048), Base64
+  final String? encryptedKey;
+
+  /// Зашифрованное сообщение (AES-256-CBC), Base64
+  final String? ciphertext;
+
+  /// Вектор инициализации для AES, Base64
+  final String? iv;
+
+  /// Флаг: сообщение зашифровано
+  bool get isEncrypted => ciphertext != null && iv != null;
+
   @override
   List<Object?> get props => [
         id,
@@ -25,5 +41,8 @@ class MessageEntity extends Equatable {
         receiverId,
         message,
         timestamp,
+        encryptedKey,
+        ciphertext,
+        iv,
       ];
 }

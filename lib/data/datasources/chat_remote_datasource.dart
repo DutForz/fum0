@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fumo/core/constants/firestore_constants.dart';
 import 'package:fumo/data/models/message_model.dart';
 import 'package:fumo/data/models/user_model.dart';
+import 'package:pointycastle/export.dart';
 
 abstract class ChatRemoteDataSource {
   Stream<List<UserModel>> getUsersStream();
@@ -10,17 +11,25 @@ abstract class ChatRemoteDataSource {
   Future<void> sendMessage({
     required String receiverId,
     required String message,
+    RSAPublicKey? recipientPublicKey,
   });
 
   Stream<List<MessageModel>> getMessages({
     required String currentUserId,
     required String otherUserId,
+    RSAPrivateKey? myPrivateKey,
   });
 
   Stream<String?> getLastMessage({
     required String currentUserId,
     required String otherUserId,
   });
+
+  /// Сохраняет публичный RSA-ключ пользователя в Firestore
+  Future<void> savePublicKey(String userId, String encodedPublicKey);
+
+  /// Получает публичный RSA-ключ пользователя из Firestore
+  Future<String?> getPublicKey(String userId);
 }
 
 class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
@@ -54,6 +63,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
   Future<void> sendMessage({
     required String receiverId,
     required String message,
+    RSAPublicKey? recipientPublicKey,
   }) async {
     final currentUser = _auth.currentUser!;
     final newMessage = MessageModel(
@@ -68,13 +78,14 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
         .collection(FirestoreConstants.chatRoomsCollection)
         .doc(chatRoomId)
         .collection(FirestoreConstants.messagesCollection)
-        .add(newMessage.toMap());
+        .add(newMessage.toMap(recipientPublicKey: recipientPublicKey));
   }
 
   @override
   Stream<List<MessageModel>> getMessages({
     required String currentUserId,
     required String otherUserId,
+    RSAPrivateKey? myPrivateKey,
   }) {
     final chatRoomId = _chatRoomId(currentUserId, otherUserId);
     return _firestore
@@ -85,7 +96,12 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
-              .map(MessageModel.fromFirestore)
+              .map(
+                (doc) => MessageModel.fromFirestore(
+                  doc,
+                  myPrivateKey: myPrivateKey,
+                ),
+              )
               .toList(),
         );
   }
@@ -107,7 +123,28 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
       if (snapshot.docs.isEmpty) {
         return null;
       }
-      return snapshot.docs.first.data()['message'] as String?;
+      final data = snapshot.docs.first.data();
+      // Пытаемся показать зашифрованное или открытое сообщение
+      return data['ciphertext'] != null
+          ? '🔒'
+          : (data['message'] as String?);
     });
+  }
+
+  @override
+  Future<void> savePublicKey(String userId, String encodedPublicKey) async {
+    await _firestore
+        .collection(FirestoreConstants.usersCollection)
+        .doc(userId)
+        .set({'publicKey': encodedPublicKey}, SetOptions(merge: true));
+  }
+
+  @override
+  Future<String?> getPublicKey(String userId) async {
+    final doc = await _firestore
+        .collection(FirestoreConstants.usersCollection)
+        .doc(userId)
+        .get();
+    return doc.data()?['publicKey'] as String?;
   }
 }

@@ -20,14 +20,16 @@ class ChatLoaded extends ChatState {
     required this.messages,
     required this.currentUserId,
     required this.otherUserId,
+    this.isEncrypted = false,
   });
 
   final List<MessageEntity> messages;
   final String currentUserId;
   final String otherUserId;
+  final bool isEncrypted;
 
   @override
-  List<Object?> get props => [messages, currentUserId, otherUserId];
+  List<Object?> get props => [messages, currentUserId, otherUserId, isEncrypted];
 }
 
 class ChatError extends ChatState {

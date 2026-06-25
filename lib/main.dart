@@ -14,16 +14,13 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupDependencyInjection();
   runApp(const MainApp());
 }
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
-
   @override
   State<MainApp> createState() => _MainAppState();
 }
@@ -34,13 +31,11 @@ class _MainAppState extends State<MainApp> {
     GeneralStream.languageStream.add(const Locale('en'));
     super.initState();
   }
-
   @override
   void dispose() {
     GeneralStream.languageStream.close();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -57,14 +52,10 @@ class _MainAppState extends State<MainApp> {
         builder: (context, snapshot) {
           return BlocBuilder<SettingsBloc, SettingsState>(
             builder: (context, settingsState) {
-              final isDarkMode = settingsState is SettingsLoaded
-                  ? settingsState.isDarkMode
-                  : false;
-
+              final isDarkMode = settingsState is SettingsLoaded ? settingsState.isDarkMode : false;
               return MaterialApp(
                 locale: snapshot.data ?? const Locale('en'),
-                localizationsDelegates:
-                    AppLocalizations.localizationsDelegates,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: L10n.locals,
                 home: const AuthGate(),
                 debugShowCheckedModeBanner: false,

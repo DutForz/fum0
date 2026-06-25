@@ -194,6 +194,8 @@ Future<void> setupDependencyInjection() async {
 
         sendMessage: sl(),
 
+        chatRepository: sl(),
+
       ),
 
     )
