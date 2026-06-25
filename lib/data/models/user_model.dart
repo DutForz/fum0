@@ -11,7 +11,6 @@ class UserModel extends UserEntity {
     super.avatarUrl,
     super.registrationMethod,
   });
-
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       uid: map['uid'] as String,
@@ -25,7 +24,6 @@ class UserModel extends UserEntity {
       ),
     );
   }
-
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,

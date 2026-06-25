@@ -4,17 +4,13 @@ import 'package:fumo/domain/repositories/profile_repository.dart';
 
 class UpdateProfile extends UseCase<UserEntity, UpdateProfileParams> {
   UpdateProfile(this._repository);
-
   final ProfileRepository _repository;
-
   @override
-  Future<UserEntity> call(UpdateProfileParams params) {
-    return _repository.updateProfile(params.profile);
-  }
+  Future<UserEntity> call(UpdateProfileParams params) =>
+      _repository.updateProfile(params.profile);
 }
 
 class UpdateProfileParams {
   const UpdateProfileParams({required this.profile});
-
   final UserEntity profile;
 }

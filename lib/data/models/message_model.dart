@@ -15,44 +15,31 @@ class MessageModel extends MessageEntity {
     super.ciphertext,
     super.iv,
   });
-
-  /// Создает модель из Firestore документа.
-  /// Если сообщение зашифровано, расшифровывает его.
   factory MessageModel.fromFirestore(
     DocumentSnapshot doc, {
     RSAPrivateKey? myPrivateKey,
   }) {
     final data = doc.data()! as Map<String, dynamic>;
-
     final ciphertext = data['ciphertext'] as String?;
     final iv = data['iv'] as String?;
     final encryptedKey = data['encryptedKey'] as String?;
-
     String message;
-
     if (ciphertext != null &&
         iv != null &&
         encryptedKey != null &&
         myPrivateKey != null) {
-      // Расшифровываем сообщение
       try {
-        message = CryptoService.decryptFromSender(
-          {
-            'encryptedKey': encryptedKey,
-            'ciphertext': ciphertext,
-            'iv': iv,
-          },
-          myPrivateKey,
-        );
+        message = CryptoService.decryptFromSender({
+          'encryptedKey': encryptedKey,
+          'ciphertext': ciphertext,
+          'iv': iv,
+        }, myPrivateKey);
       } catch (_) {
-        // Если не удалось расшифровать, показываем заглушку
         message = '🔒 Encrypted message';
       }
     } else {
-      // Сообщение не зашифровано (старый формат или свое сообщение)
       message = data['message'] as String;
     }
-
     return MessageModel(
       id: doc.id,
       senderId: data['senderID'] as String,
@@ -65,9 +52,6 @@ class MessageModel extends MessageEntity {
       encryptedKey: encryptedKey,
     );
   }
-
-  /// Преобразует в Map для Firestore.
-  /// Если указан публичный ключ получателя, шифрует сообщение.
   Map<String, dynamic> toMap({RSAPublicKey? recipientPublicKey}) {
     final map = <String, dynamic>{
       'senderID': senderId,
@@ -75,9 +59,7 @@ class MessageModel extends MessageEntity {
       'receiverID': receiverId,
       'timestamp': Timestamp.fromDate(timestamp),
     };
-
     if (recipientPublicKey != null) {
-      // Шифруем сообщение публичным ключом получателя
       final encrypted = CryptoService.encryptForRecipient(
         message,
         recipientPublicKey,
@@ -85,13 +67,10 @@ class MessageModel extends MessageEntity {
       map['ciphertext'] = encrypted['ciphertext'];
       map['iv'] = encrypted['iv'];
       map['encryptedKey'] = encrypted['encryptedKey'];
-      // Очищаем поле открытого текста
       map['message'] = '';
     } else {
-      // Если ключа нет, сохраняем как есть (для обратной совместимости)
       map['message'] = message;
     }
-
     return map;
   }
 }

@@ -3,13 +3,7 @@ import 'package:fumo/domain/entities/user_entity.dart';
 import 'package:fumo/domain/repositories/search_repository.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
-  SearchRepositoryImpl({required SearchRemoteDataSource remoteDataSource})
-      : _remoteDataSource = remoteDataSource;
-
+  SearchRepositoryImpl({required SearchRemoteDataSource remoteDataSource}) : _remoteDataSource = remoteDataSource;
   final SearchRemoteDataSource _remoteDataSource;
-
-  @override
-  Future<List<UserEntity>> searchUsers(String query) {
-    return _remoteDataSource.searchUsers(query);
-  }
+  @override Future<List<UserEntity>> searchUsers(String query) => _remoteDataSource.searchUsers(query);
 }
