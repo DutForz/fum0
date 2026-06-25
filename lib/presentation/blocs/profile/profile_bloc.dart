@@ -17,11 +17,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     required UpdateProfile updateProfile,
     required UploadAvatar uploadAvatar,
     required GetCurrentUser getCurrentUser,
-  })  : _getProfile = getProfile,
-        _updateProfile = updateProfile,
-        _uploadAvatar = uploadAvatar,
-        _getCurrentUser = getCurrentUser,
-        super(const ProfileInitial()) {
+  }) : _getProfile = getProfile,
+       _updateProfile = updateProfile,
+       _uploadAvatar = uploadAvatar,
+       _getCurrentUser = getCurrentUser,
+       super(const ProfileInitial()) {
     on<LoadProfile>(_onLoadProfile);
     on<UpdateNickname>(_onUpdateNickname);
     on<UpdateBio>(_onUpdateBio);
@@ -30,12 +30,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<AvatarUploadRequested>(_onAvatarUploadRequested);
     on<SaveProfile>(_onSaveProfile);
   }
-
   final GetProfile _getProfile;
   final UpdateProfile _updateProfile;
   final UploadAvatar _uploadAvatar;
   final GetCurrentUser _getCurrentUser;
-
   Future<void> _onLoadProfile(
     LoadProfile event,
     Emitter<ProfileState> emit,
@@ -45,7 +43,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(const ProfileError('Not authenticated'));
       return;
     }
-
     emit(const ProfileLoading());
     try {
       final profile = await _getProfile(GetProfileParams(uid: currentUser.uid));
@@ -57,15 +54,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  void _onUpdateNickname(
-    UpdateNickname event,
-    Emitter<ProfileState> emit,
-  ) {
+  void _onUpdateNickname(UpdateNickname event, Emitter<ProfileState> emit) {
     final currentState = state;
-    if (currentState is! ProfileLoaded) {
-      return;
-    }
-
+    if (currentState is! ProfileLoaded) return;
     emit(
       currentState.copyWith(
         profile: UserModel(
@@ -82,15 +73,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
   }
 
-  void _onUpdateBio(
-    UpdateBio event,
-    Emitter<ProfileState> emit,
-  ) {
+  void _onUpdateBio(UpdateBio event, Emitter<ProfileState> emit) {
     final currentState = state;
-    if (currentState is! ProfileLoaded) {
-      return;
-    }
-
+    if (currentState is! ProfileLoaded) return;
     emit(
       currentState.copyWith(
         profile: UserModel(
@@ -107,15 +92,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
   }
 
-  void _onUpdatePhone(
-    UpdatePhone event,
-    Emitter<ProfileState> emit,
-  ) {
+  void _onUpdatePhone(UpdatePhone event, Emitter<ProfileState> emit) {
     final currentState = state;
-    if (currentState is! ProfileLoaded) {
-      return;
-    }
-
+    if (currentState is! ProfileLoaded) return;
     emit(
       currentState.copyWith(
         profile: UserModel(
@@ -132,15 +111,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
   }
 
-  void _onUpdateEmail(
-    UpdateEmail event,
-    Emitter<ProfileState> emit,
-  ) {
+  void _onUpdateEmail(UpdateEmail event, Emitter<ProfileState> emit) {
     final currentState = state;
-    if (currentState is! ProfileLoaded) {
-      return;
-    }
-
+    if (currentState is! ProfileLoaded) return;
     emit(
       currentState.copyWith(
         profile: UserModel(
@@ -162,10 +135,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     final currentState = state;
-    if (currentState is! ProfileLoaded) {
-      return;
-    }
-
+    if (currentState is! ProfileLoaded) return;
     emit(currentState.copyWith(isUploadingAvatar: true, clearMessage: true));
     try {
       final avatarUrl = await _uploadAvatar(
@@ -174,7 +144,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           filePath: event.filePath,
         ),
       );
-
       emit(
         currentState.copyWith(
           profile: UserModel(
@@ -191,18 +160,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ),
       );
     } on ServerFailure catch (e) {
-      emit(
-        currentState.copyWith(
-          isUploadingAvatar: false,
-          message: e.message,
-        ),
-      );
+      emit(currentState.copyWith(isUploadingAvatar: false, message: e.message));
     } catch (e) {
       emit(
-        currentState.copyWith(
-          isUploadingAvatar: false,
-          message: e.toString(),
-        ),
+        currentState.copyWith(isUploadingAvatar: false, message: e.toString()),
       );
     }
   }
@@ -212,10 +173,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     final currentState = state;
-    if (currentState is! ProfileLoaded) {
-      return;
-    }
-
+    if (currentState is! ProfileLoaded) return;
     emit(currentState.copyWith(isSaving: true, clearMessage: true));
     try {
       final updatedProfile = await _updateProfile(
@@ -229,33 +187,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ),
       );
     } on NicknameTakenFailure catch (e) {
-      emit(
-        currentState.copyWith(
-          isSaving: false,
-          message: e.message,
-        ),
-      );
+      emit(currentState.copyWith(isSaving: false, message: e.message));
     } on AuthFailure catch (e) {
-      emit(
-        currentState.copyWith(
-          isSaving: false,
-          message: e.message,
-        ),
-      );
+      emit(currentState.copyWith(isSaving: false, message: e.message));
     } on ServerFailure catch (e) {
-      emit(
-        currentState.copyWith(
-          isSaving: false,
-          message: e.message,
-        ),
-      );
+      emit(currentState.copyWith(isSaving: false, message: e.message));
     } catch (e) {
-      emit(
-        currentState.copyWith(
-          isSaving: false,
-          message: e.toString(),
-        ),
-      );
+      emit(currentState.copyWith(isSaving: false, message: e.toString()));
     }
   }
 }
