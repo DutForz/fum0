@@ -11,4 +11,6 @@ abstract class ChatRepository {
   Future<String?> getPublicKey(String userId);
   Future<void> deleteMessage({required String currentUserId, required String otherUserId, required String messageId});
   Future<void> updateMessage({required String currentUserId, required String otherUserId, required String messageId, required String newMessage});
+  Future<void> saveChatTheme({required String chatRoomId, required Map<String, dynamic> themeData});
+  Stream<Map<String, dynamic>?> watchChatTheme({required String chatRoomId});
 }

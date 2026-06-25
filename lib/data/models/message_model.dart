@@ -33,10 +33,10 @@ class MessageModel extends MessageEntity {
             'iv': iv,
           }, myPrivateKey);
         } catch (_) {
-          message = '🔒 Encrypted message';
+          message = 'Encrypted message';
         }
       } else {
-        message = '🔒 Encrypted message';
+        message = 'Encrypted message';
       }
     } else {
       message = data['message'] as String? ?? '';
@@ -68,10 +68,8 @@ class MessageModel extends MessageEntity {
       map['ciphertext'] = encrypted['ciphertext'];
       map['iv'] = encrypted['iv'];
       map['encryptedKey'] = encrypted['encryptedKey'];
-      // Never store plaintext message in Firestore when encrypted
       map['message'] = '';
     } else {
-      // Fallback: store plaintext only if encryption keys aren't exchanged yet
       map['message'] = message;
     }
     return map;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:fumo/core/theme/chat_theme_provider.dart';
 
 class ChatBubble extends StatelessWidget {
   const ChatBubble({
@@ -50,14 +51,18 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ChatThemeProvider.of(context);
+    final bubbleColor = isCurrentUser ? theme.ownBubbleColor : theme.otherBubbleColor;
+    final textColor = isCurrentUser ? theme.ownTextColor : theme.otherTextColor;
+
     return GestureDetector(
       onLongPress: () => _showContextMenu(context),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: isEditing
-              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.3)
-              : Theme.of(context).colorScheme.inversePrimary,
+              ? bubbleColor.withValues(alpha: 0.3)
+              : bubbleColor,
           borderRadius: BorderRadius.circular(50),
           border: isEditing
               ? Border.all(color: Theme.of(context).colorScheme.primary, width: 2)
@@ -70,17 +75,17 @@ class ChatBubble extends StatelessWidget {
             Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(Icons.edit, size: 14, color: Theme.of(context).colorScheme.primary),
               const SizedBox(width: 4),
-              Text(message, style: TextStyle(color: Theme.of(context).colorScheme.surface)),
+              Text(message, style: TextStyle(color: textColor, fontFamily: theme.fontFamily)),
             ])
           else if (isEncrypted)
             Row(mainAxisSize: MainAxisSize.min, children: [
-              Icon(Icons.lock, size: 14, color: Theme.of(context).colorScheme.surface),
+              Icon(Icons.lock, size: 14, color: textColor),
               const SizedBox(width: 4),
-              Text(message, style: TextStyle(color: Theme.of(context).colorScheme.surface)),
+              Text(message, style: TextStyle(color: textColor, fontFamily: theme.fontFamily)),
             ])
           else
-            Text(message, style: TextStyle(color: Theme.of(context).colorScheme.surface)),
-          Text(DateFormat('HH:mm').format(timeStamp.toLocal()), textAlign: TextAlign.left, style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+            Text(message, style: TextStyle(color: textColor, fontFamily: theme.fontFamily)),
+          Text(DateFormat('HH:mm').format(timeStamp.toLocal()), textAlign: TextAlign.left, style: TextStyle(color: textColor.withValues(alpha: 0.7))),
         ]),
       ),
     );

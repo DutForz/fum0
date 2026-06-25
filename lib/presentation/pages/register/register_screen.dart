@@ -28,7 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Myicon(gif: 'giphy (2).gif'),
           const SizedBox(height: 100),
-          Text('Hi my cutie', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16)),
+          Text('Create your account', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16)),
           MyTextField(hintText: 'Login', Obscure: false, controller: _emailController),
           const SizedBox(height: 5),
           MyTextField(hintText: 'password', Obscure: true, controller: _passwordController),

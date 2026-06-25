@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Myicon(gif: 'giphy.gif'),
           const SizedBox(height: 100),
-          Text("Welcome Back you've been missed", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16)),
+          Text("Welcome back", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16)),
           MyTextField(hintText: 'Login', Obscure: false, controller: _emailController),
           const SizedBox(height: 5),
           MyTextField(hintText: 'password', Obscure: true, controller: _passwordController),

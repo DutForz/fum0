@@ -15,4 +15,6 @@ class ChatRepositoryImpl implements ChatRepository {
   @override Future<String?> getPublicKey(String userId) => _remoteDataSource.getPublicKey(userId);
   @override Future<void> deleteMessage({required String currentUserId, required String otherUserId, required String messageId}) => _remoteDataSource.deleteMessage(currentUserId: currentUserId, otherUserId: otherUserId, messageId: messageId);
   @override Future<void> updateMessage({required String currentUserId, required String otherUserId, required String messageId, required String newMessage}) => _remoteDataSource.updateMessage(currentUserId: currentUserId, otherUserId: otherUserId, messageId: messageId, newMessage: newMessage);
+  @override Future<void> saveChatTheme({required String chatRoomId, required Map<String, dynamic> themeData}) => _remoteDataSource.saveChatTheme(chatRoomId: chatRoomId, themeData: themeData);
+  @override Stream<Map<String, dynamic>?> watchChatTheme({required String chatRoomId}) => _remoteDataSource.watchChatTheme(chatRoomId: chatRoomId);
 }
