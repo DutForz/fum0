@@ -5,5 +5,14 @@
     "settings": "S E T T I N G S ",
     "error": "e r r o r  ",
     "loading": "L O A D I N G .....",
-    "darkmode": "D A R K _ M O D E"
+    "darkmode": "D A R K _ M O D E",
+    "profile": "P R O F I L E",
+    "nickname": "Nickname",
+    "bio": "Bio",
+    "phone": "Phone",
+    "email": "Email",
+    "save": "Save",
+    "changeAvatar": "Tap to change avatar",
+    "emailNotEditable": "Email can only be changed for phone registration",
+    "phoneNotEditable": "Phone can only be changed for email registration"
 }

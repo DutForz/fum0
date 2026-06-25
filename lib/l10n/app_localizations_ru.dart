@@ -25,4 +25,33 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get darkmode => 'Тёмный режим';
+
+  @override
+  String get profile => 'Профиль';
+
+  @override
+  String get nickname => 'Никнейм';
+
+  @override
+  String get bio => 'О себе';
+
+  @override
+  String get phone => 'Телефон';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get save => 'Сохранить';
+
+  @override
+  String get changeAvatar => 'Нажмите, чтобы сменить аватар';
+
+  @override
+  String get emailNotEditable =>
+      'Email можно изменить только при регистрации по телефону';
+
+  @override
+  String get phoneNotEditable =>
+      'Телефон можно изменить только при регистрации по email';
 }

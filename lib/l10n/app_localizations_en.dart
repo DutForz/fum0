@@ -25,4 +25,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get darkmode => 'D A R K _ M O D E';
+
+  @override
+  String get profile => 'P R O F I L E';
+
+  @override
+  String get nickname => 'Nickname';
+
+  @override
+  String get bio => 'Bio';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get changeAvatar => 'Tap to change avatar';
+
+  @override
+  String get emailNotEditable =>
+      'Email can only be changed for phone registration';
+
+  @override
+  String get phoneNotEditable =>
+      'Phone can only be changed for email registration';
 }

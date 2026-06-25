@@ -133,6 +133,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'D A R K _ M O D E'**
   String get darkmode;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'P R O F I L E'**
+  String get profile;
+
+  /// No description provided for @nickname.
+  ///
+  /// In en, this message translates to:
+  /// **'Nickname'**
+  String get nickname;
+
+  /// No description provided for @bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio'**
+  String get bio;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @changeAvatar.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to change avatar'**
+  String get changeAvatar;
+
+  /// No description provided for @emailNotEditable.
+  ///
+  /// In en, this message translates to:
+  /// **'Email can only be changed for phone registration'**
+  String get emailNotEditable;
+
+  /// No description provided for @phoneNotEditable.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone can only be changed for email registration'**
+  String get phoneNotEditable;
 }
 
 class _AppLocalizationsDelegate

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
-  final String text, lastMessage;
+  final String text;
+  final String lastMessage;
+  final String? avatarUrl;
   final void Function()? onTap;
 
   const UserTile({
@@ -9,6 +11,7 @@ class UserTile extends StatelessWidget {
     required this.onTap,
     required this.text,
     required this.lastMessage,
+    this.avatarUrl,
   });
 
   @override
@@ -20,25 +23,40 @@ class UserTile extends StatelessWidget {
           color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(70),
         ),
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-        child: Stack(
+        child: Row(
           children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.person),
-                    const SizedBox(width: 15),
-                    Text(text),
-                  ],
-                ),
-
-                Text(
-                  lastMessage,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                ),
-              ],
+            CircleAvatar(
+              radius: 24,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              backgroundImage:
+                  avatarUrl != null ? NetworkImage(avatarUrl!) : null,
+              child: avatarUrl == null
+                  ? Icon(
+                      Icons.person,
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    )
+                  : null,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    text,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    lastMessage,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
