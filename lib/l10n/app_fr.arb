@@ -1,0 +1,18 @@
+{
+    "@@locale": "fr",
+    "language": "Français",
+    "home": "Accueil",
+    "settings": "Paramètres",
+    "error": "erreur",
+    "loading": "Chargement.....",
+    "darkmode": "Mode sombre",
+    "profile": "Profil",
+    "nickname": "Surnom",
+    "bio": "Bio",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "save": "Enregistrer",
+    "changeAvatar": "Appuyez pour changer l'avatar",
+    "emailNotEditable": "L'e-mail ne peut être modifié que lors d'une inscription par téléphone",
+    "phoneNotEditable": "Le téléphone ne peut être modifié que lors d'une inscription par e-mail"
+}

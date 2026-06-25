@@ -1,0 +1,18 @@
+{
+    "@@locale": "es",
+    "language": "Español",
+    "home": "Inicio",
+    "settings": "Ajustes",
+    "error": "Error",
+    "loading": "Cargando.....",
+    "darkmode": "Modo oscuro",
+    "profile": "Perfil",
+    "nickname": "Apodo",
+    "bio": "Biografía",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "save": "Guardar",
+    "changeAvatar": "Toca para cambiar el avatar",
+    "emailNotEditable": "El correo solo se puede cambiar con registro por teléfono",
+    "phoneNotEditable": "El teléfono solo se puede cambiar con registro por correo"
+}

@@ -1,0 +1,18 @@
+{
+    "@@locale": "ko",
+    "language": "한국어",
+    "home": "홈",
+    "settings": "설정",
+    "error": "오류",
+    "loading": "로딩 중.....",
+    "darkmode": "다크 모드",
+    "profile": "프로필",
+    "nickname": "닉네임",
+    "bio": "소개",
+    "phone": "전화번호",
+    "email": "이메일",
+    "save": "저장",
+    "changeAvatar": "탭하여 아바타 변경",
+    "emailNotEditable": "이메일은 전화 등록 시에만 변경 가능합니다",
+    "phoneNotEditable": "전화번호는 이메일 등록 시에만 변경 가능합니다"
+}

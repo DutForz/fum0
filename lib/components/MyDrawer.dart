@@ -174,15 +174,13 @@ class Mydrawer extends StatelessWidget {
 
                   onTap: () {
 
-                    GeneralStream.languageStream.add(
+                    final currentLocale = Localizations.localeOf(context);
 
-                      L10n.locals.firstWhere(
+                    final currentIndex = L10n.locals.indexOf(currentLocale);
 
-                        (element) => element != Localizations.localeOf(context),
+                    final nextIndex = (currentIndex + 1) % L10n.locals.length;
 
-                      ),
-
-                    );
+                    GeneralStream.languageStream.add(L10n.locals[nextIndex]);
 
                   },
 
@@ -217,5 +215,3 @@ class Mydrawer extends StatelessWidget {
   }
 
 }
-
-

@@ -1,0 +1,18 @@
+{
+    "@@locale": "zh",
+    "language": "中文",
+    "home": "首页",
+    "settings": "设置",
+    "error": "错误",
+    "loading": "加载中.....",
+    "darkmode": "深色模式",
+    "profile": "个人资料",
+    "nickname": "昵称",
+    "bio": "简介",
+    "phone": "电话",
+    "email": "电子邮件",
+    "save": "保存",
+    "changeAvatar": "点击更换头像",
+    "emailNotEditable": "邮箱只能在手机注册时更改",
+    "phoneNotEditable": "电话只能在邮箱注册时更改"
+}

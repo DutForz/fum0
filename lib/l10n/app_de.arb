@@ -1,0 +1,18 @@
+{
+    "@@locale": "de",
+    "language": "Deutsch",
+    "home": "Startseite",
+    "settings": "Einstellungen",
+    "error": "Fehler",
+    "loading": "Lädt.....",
+    "darkmode": "Dunkelmodus",
+    "profile": "Profil",
+    "nickname": "Spitzname",
+    "bio": "Bio",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "save": "Speichern",
+    "changeAvatar": "Tippen, um Avatar zu ändern",
+    "emailNotEditable": "E-Mail kann nur bei Telefonregistrierung geändert werden",
+    "phoneNotEditable": "Telefon kann nur bei E-Mail-Registrierung geändert werden"
+}

@@ -1,0 +1,18 @@
+{
+    "@@locale": "uz",
+    "language": "O'zbekcha",
+    "home": "Bosh sahifa",
+    "settings": "Sozlamalar",
+    "error": "xato",
+    "loading": "Yuklanmoqda.....",
+    "darkmode": "Qorong'u rejim",
+    "profile": "Profil",
+    "nickname": "Taxallus",
+    "bio": "O'zim haqimda",
+    "phone": "Telefon",
+    "email": "Elektron pochta",
+    "save": "Saqlash",
+    "changeAvatar": "Avatarni o'zgartirish uchun bosing",
+    "emailNotEditable": "Elektron pochtani faqat telefon orqali ro'yxatdan o'tishda o'zgartirish mumkin",
+    "phoneNotEditable": "Telefonni faqat elektron pochta orqali ro'yxatdan o'tishda o'zgartirish mumkin"
+}
