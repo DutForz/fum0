@@ -12,6 +12,8 @@ abstract class ChatRemoteDataSource {
   Stream<String?> getLastMessage({required String currentUserId, required String otherUserId});
   Future<void> savePublicKey(String userId, String encodedPublicKey);
   Future<String?> getPublicKey(String userId);
+  Future<void> deleteMessage({required String currentUserId, required String otherUserId, required String messageId});
+  Future<void> updateMessage({required String currentUserId, required String otherUserId, required String messageId, required String newMessage});
 }
 
 class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
@@ -32,7 +34,9 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
     return _firestore.collection(FirestoreConstants.chatRoomsCollection).doc(_chatRoomId(currentUserId, otherUserId)).collection(FirestoreConstants.messagesCollection).orderBy('timestamp', descending: true).limit(1).snapshots().map((snapshot) {
       if (snapshot.docs.isEmpty) return null;
       final data = snapshot.docs.first.data();
-      return data['ciphertext'] != null ? '🔒' : (data['message'] as String?);
+      final ciphertext = data['ciphertext'] as String?;
+      if (ciphertext != null && ciphertext.isNotEmpty) return ' Encrypted message';
+      return data['message'] as String?;
     });
   }
   @override Future<void> savePublicKey(String userId, String encodedPublicKey) async {
@@ -41,5 +45,22 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
   @override Future<String?> getPublicKey(String userId) async {
     final doc = await _firestore.collection(FirestoreConstants.usersCollection).doc(userId).get();
     return doc.data()?['publicKey'] as String?;
+  }
+  @override Future<void> deleteMessage({required String currentUserId, required String otherUserId, required String messageId}) async {
+    await _firestore
+        .collection(FirestoreConstants.chatRoomsCollection)
+        .doc(_chatRoomId(currentUserId, otherUserId))
+        .collection(FirestoreConstants.messagesCollection)
+        .doc(messageId)
+        .delete();
+  }
+
+  @override Future<void> updateMessage({required String currentUserId, required String otherUserId, required String messageId, required String newMessage}) async {
+    await _firestore
+        .collection(FirestoreConstants.chatRoomsCollection)
+        .doc(_chatRoomId(currentUserId, otherUserId))
+        .collection(FirestoreConstants.messagesCollection)
+        .doc(messageId)
+        .update({'message': newMessage, 'ciphertext': FieldValue.delete(), 'iv': FieldValue.delete(), 'encryptedKey': FieldValue.delete()});
   }
 }

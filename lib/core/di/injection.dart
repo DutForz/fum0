@@ -18,9 +18,11 @@ import 'package:fumo/domain/usecases/auth/get_auth_state.dart';
 import 'package:fumo/domain/usecases/auth/sign_in_with_email.dart';
 import 'package:fumo/domain/usecases/auth/sign_out.dart';
 import 'package:fumo/domain/usecases/auth/sign_up_with_email.dart';
+import 'package:fumo/domain/usecases/chat/delete_message.dart';
 import 'package:fumo/domain/usecases/chat/get_last_message.dart';
 import 'package:fumo/domain/usecases/chat/get_messages.dart';
 import 'package:fumo/domain/usecases/chat/send_message.dart';
+import 'package:fumo/domain/usecases/chat/update_message.dart';
 import 'package:fumo/domain/usecases/profile/get_profile.dart';
 import 'package:fumo/domain/usecases/profile/update_profile.dart';
 import 'package:fumo/domain/usecases/profile/upload_avatar.dart';
@@ -54,12 +56,14 @@ Future<void> setupDependencyInjection() async {
     ..registerLazySingleton(() => SendMessage(sl()))
     ..registerLazySingleton(() => GetMessages(sl()))
     ..registerLazySingleton(() => GetLastMessage(sl()))
+    ..registerLazySingleton(() => DeleteMessage(sl()))
+    ..registerLazySingleton(() => UpdateMessage(sl()))
     ..registerLazySingleton(() => SearchUsers(sl()))
     ..registerLazySingleton(() => GetProfile(sl()))
     ..registerLazySingleton(() => UpdateProfile(sl()))
     ..registerLazySingleton(() => UploadAvatar(sl()))
     ..registerFactory(() => AuthBloc(getAuthState: sl(), signInWithEmail: sl(), signUpWithEmail: sl(), signOut: sl()))
-    ..registerFactory(() => ChatBloc(getMessages: sl(), sendMessage: sl(), chatRepository: sl()))
+    ..registerFactory(() => ChatBloc(getMessages: sl(), sendMessage: sl(), deleteMessage: sl(), updateMessage: sl(), chatRepository: sl()))
     ..registerFactory(() => HomeBloc(chatRepository: sl(), searchUsers: sl(), getCurrentUser: sl()))
     ..registerFactory(() => SettingsBloc(initialDarkMode: false))
     ..registerFactory(() => ProfileBloc(getProfile: sl(), updateProfile: sl(), uploadAvatar: sl(), getCurrentUser: sl()));

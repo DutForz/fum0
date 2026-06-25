@@ -24,21 +24,22 @@ class MessageModel extends MessageEntity {
     final iv = data['iv'] as String?;
     final encryptedKey = data['encryptedKey'] as String?;
     String message;
-    if (ciphertext != null &&
-        iv != null &&
-        encryptedKey != null &&
-        myPrivateKey != null) {
-      try {
-        message = CryptoService.decryptFromSender({
-          'encryptedKey': encryptedKey,
-          'ciphertext': ciphertext,
-          'iv': iv,
-        }, myPrivateKey);
-      } catch (_) {
+    if (ciphertext != null && iv != null && encryptedKey != null) {
+      if (myPrivateKey != null) {
+        try {
+          message = CryptoService.decryptFromSender({
+            'encryptedKey': encryptedKey,
+            'ciphertext': ciphertext,
+            'iv': iv,
+          }, myPrivateKey);
+        } catch (_) {
+          message = '🔒 Encrypted message';
+        }
+      } else {
         message = '🔒 Encrypted message';
       }
     } else {
-      message = data['message'] as String;
+      message = data['message'] as String? ?? '';
     }
     return MessageModel(
       id: doc.id,
@@ -67,8 +68,10 @@ class MessageModel extends MessageEntity {
       map['ciphertext'] = encrypted['ciphertext'];
       map['iv'] = encrypted['iv'];
       map['encryptedKey'] = encrypted['encryptedKey'];
+      // Never store plaintext message in Firestore when encrypted
       map['message'] = '';
     } else {
+      // Fallback: store plaintext only if encryption keys aren't exchanged yet
       map['message'] = message;
     }
     return map;

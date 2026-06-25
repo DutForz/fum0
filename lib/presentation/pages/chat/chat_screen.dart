@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fumo/components/MyTextField.dart';
 import 'package:fumo/components/chat_bubble.dart';
@@ -77,7 +78,73 @@ class _MessageItem extends StatelessWidget {
     final isCurrentUser = message.senderId == currentUserId;
     final alignment = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
     return Container(alignment: alignment, child: Column(crossAxisAlignment: isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start, children: [
-      ChatBubble(isCurrentUser: isCurrentUser, message: message.message, timeStamp: message.timestamp),
+      ChatBubble(
+        isCurrentUser: isCurrentUser,
+        message: message.message,
+        timeStamp: message.timestamp,
+        isEncrypted: message.isEncrypted,
+        onCopy: () => _copyMessage(context),
+        onDelete: isCurrentUser ? () => _deleteMessage(context) : null,
+        onEdit: isCurrentUser ? () => _editMessage(context) : null,
+      ),
     ]));
+  }
+
+  void _copyMessage(BuildContext context) {
+    Clipboard.setData(ClipboardData(text: message.message));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Message copied to clipboard'), duration: Duration(seconds: 2)),
+    );
+  }
+
+  void _deleteMessage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Delete message'),
+        content: const Text('Are you sure you want to delete this message?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              if (message.id != null) {
+                context.read<ChatBloc>().add(ChatDeleteMessageRequested(message.id!));
+              }
+            },
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _editMessage(BuildContext context) {
+    final controller = TextEditingController(text: message.message);
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Edit message'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(hintText: 'Enter new message...'),
+          autofocus: true,
+          maxLines: 3,
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () {
+              final newText = controller.text.trim();
+              if (newText.isNotEmpty && newText != message.message && message.id != null) {
+                context.read<ChatBloc>().add(ChatUpdateMessageRequested(messageId: message.id!, newMessage: newText));
+              }
+              Navigator.pop(ctx);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
   }
 }

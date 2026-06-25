@@ -5,3 +5,5 @@ class ChatStarted extends ChatEvent { const ChatStarted({required this.currentUs
 class ChatSendMessageRequested extends ChatEvent { const ChatSendMessageRequested(this.message); final String message; @override List<Object?> get props => [message]; }
 class ChatMessagesUpdated extends ChatEvent { const ChatMessagesUpdated(this.messages); final List<MessageEntity> messages; @override List<Object?> get props => [messages]; }
 class ChatMessagesFailed extends ChatEvent { const ChatMessagesFailed(this.message); final String message; @override List<Object?> get props => [message]; }
+class ChatDeleteMessageRequested extends ChatEvent { const ChatDeleteMessageRequested(this.messageId); final String messageId; @override List<Object?> get props => [messageId]; }
+class ChatUpdateMessageRequested extends ChatEvent { const ChatUpdateMessageRequested({required this.messageId, required this.newMessage}); final String messageId; final String newMessage; @override List<Object?> get props => [messageId, newMessage]; }
