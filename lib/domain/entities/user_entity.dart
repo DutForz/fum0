@@ -10,6 +10,11 @@ class UserEntity extends Equatable {
   final String? bio;
   final String? avatarUrl;
   final RegistrationMethod registrationMethod;
-  String get displayName { if (nickname != null && nickname!.trim().isNotEmpty) return nickname!.trim(); return email; }
+  String get displayName {
+    if (nickname != null && nickname!.trim().isNotEmpty) return nickname!.trim();
+    if (email.isNotEmpty) return email;
+    if (phone != null && phone!.trim().isNotEmpty) return phone!.trim();
+    return 'Unknown';
+  }
   @override List<Object?> get props => [uid, email, nickname, phone, bio, avatarUrl, registrationMethod];
 }

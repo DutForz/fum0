@@ -8,6 +8,7 @@ class ChatBubble extends StatelessWidget {
     required this.message,
     required this.timeStamp,
     this.isEncrypted = false,
+    this.isEditing = false,
     this.onDelete,
     this.onEdit,
     this.onCopy,
@@ -16,62 +17,62 @@ class ChatBubble extends StatelessWidget {
   final bool isCurrentUser;
   final DateTime timeStamp;
   final bool isEncrypted;
+  final bool isEditing;
   final VoidCallback? onDelete;
   final VoidCallback? onEdit;
   final VoidCallback? onCopy;
 
   void _showContextMenu(BuildContext context) {
-    showModalBottomSheet(
+    final renderBox = context.findRenderObject() as RenderBox;
+    final offset = renderBox.localToGlobal(Offset.zero);
+
+    showMenu<String>(
       context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.copy),
-              title: const Text('Copy message'),
-              onTap: () {
-                Navigator.pop(context);
-                onCopy?.call();
-              },
-            ),
-            if (isCurrentUser)
-              ListTile(
-                leading: const Icon(Icons.edit),
-                title: const Text('Edit message'),
-                onTap: () {
-                  Navigator.pop(context);
-                  onEdit?.call();
-                },
-              ),
-            if (isCurrentUser)
-              ListTile(
-                leading: const Icon(Icons.delete, color: Colors.red),
-                title: const Text('Delete message', style: TextStyle(color: Colors.red)),
-                onTap: () {
-                  Navigator.pop(context);
-                  onDelete?.call();
-                },
-              ),
-          ],
-        ),
+      position: RelativeRect.fromLTRB(
+        isCurrentUser ? offset.dx - 200 : offset.dx + renderBox.size.width + 8,
+        offset.dy,
+        offset.dx + renderBox.size.width + 200,
+        offset.dy + renderBox.size.height,
       ),
-    );
+      items: [
+        const PopupMenuItem(value: 'copy', child: ListTile(leading: Icon(Icons.copy, size: 20), title: Text('Copy'), dense: true, contentPadding: EdgeInsets.zero)),
+        if (isCurrentUser) ...[
+          const PopupMenuItem(value: 'edit', child: ListTile(leading: Icon(Icons.edit, size: 20), title: Text('Edit'), dense: true, contentPadding: EdgeInsets.zero)),
+          const PopupMenuItem(value: 'delete', child: ListTile(leading: Icon(Icons.delete, size: 20, color: Colors.red), title: Text('Delete', style: TextStyle(color: Colors.red)), dense: true, contentPadding: EdgeInsets.zero)),
+        ],
+      ],
+    ).then((value) {
+      if (value == 'copy') onCopy?.call();
+      if (value == 'edit') onEdit?.call();
+      if (value == 'delete') onDelete?.call();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () => _showContextMenu(context),
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.inversePrimary,
+          color: isEditing
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.3)
+              : Theme.of(context).colorScheme.inversePrimary,
           borderRadius: BorderRadius.circular(50),
+          border: isEditing
+              ? Border.all(color: Theme.of(context).colorScheme.primary, width: 2)
+              : null,
         ),
         padding: const EdgeInsets.all(5),
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
         child: Column(children: [
-          if (isEncrypted)
+          if (isEditing)
+            Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(Icons.edit, size: 14, color: Theme.of(context).colorScheme.primary),
+              const SizedBox(width: 4),
+              Text(message, style: TextStyle(color: Theme.of(context).colorScheme.surface)),
+            ])
+          else if (isEncrypted)
             Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(Icons.lock, size: 14, color: Theme.of(context).colorScheme.surface),
               const SizedBox(width: 4),

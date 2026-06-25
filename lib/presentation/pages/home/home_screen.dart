@@ -48,7 +48,7 @@ class _UserListItem extends StatelessWidget {
   @override Widget build(BuildContext context) {
     return StreamBuilder<String?>(
       stream: sl<GetLastMessage>()(GetLastMessageParams(currentUserId: currentUserId, otherUserId: user.uid)),
-      builder: (context, snapshot) => UserTile(text: user.displayName, avatarUrl: user.avatarUrl, lastMessage: snapshot.data ?? '', onTap: () { Navigator.push(context, MaterialPageRoute<void>(builder: (context) => ChatScreen(receiverEmail: user.email, receiverId: user.uid, receiverNickname: user.nickname, receiverBio: user.bio, receiverAvatarUrl: user.avatarUrl))); }),
+      builder: (context, snapshot) => UserTile(text: user.displayName, avatarUrl: user.avatarUrl, lastMessage: snapshot.data ?? '', onTap: () { Navigator.push(context, MaterialPageRoute<void>(builder: (context) => ChatScreen(receiverEmail: user.email, receiverId: user.uid, receiverNickname: user.nickname, receiverBio: user.bio, receiverAvatarUrl: user.avatarUrl, receiverPhone: user.phone))); }),
     );
   }
 }
