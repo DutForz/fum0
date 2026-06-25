@@ -205,6 +205,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone can only be changed for email registration'**
   String get phoneNotEditable;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeBack;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'password'**
+  String get password;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signIn;
+
+  /// No description provided for @notAMember.
+  ///
+  /// In en, this message translates to:
+  /// **'not a member ?'**
+  String get notAMember;
+
+  /// No description provided for @registerNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Register now'**
+  String get registerNow;
+
+  /// No description provided for @createYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account'**
+  String get createYourAccount;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get confirmPassword;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// No description provided for @doYouMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you a member ?'**
+  String get doYouMember;
+
+  /// No description provided for @passwordDontMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Password don\'t match'**
+  String get passwordDontMatch;
+
+  /// No description provided for @editingMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Editing message'**
+  String get editingMessage;
+
+  /// No description provided for @messageCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Message copied to clipboard'**
+  String get messageCopied;
+
+  /// No description provided for @deleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete message'**
+  String get deleteMessage;
+
+  /// No description provided for @deleteMessageConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this message?'**
+  String get deleteMessageConfirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @alreadyDefaultTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Already using default theme'**
+  String get alreadyDefaultTheme;
+
+  /// No description provided for @changeChatTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Chat Theme'**
+  String get changeChatTheme;
+
+  /// No description provided for @resetTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Theme'**
+  String get resetTheme;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @savedThemes.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved Themes'**
+  String get savedThemes;
+
+  /// No description provided for @noSavedThemes.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved themes yet'**
+  String get noSavedThemes;
+
+  /// No description provided for @savedThemesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a theme in any chat and it will appear here,\nor go to a chat and customize the theme there.'**
+  String get savedThemesHint;
+
+  /// No description provided for @goToChatCreateTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to a chat to create theme'**
+  String get goToChatCreateTheme;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @you.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get you;
+
+  /// No description provided for @fontLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Font: '**
+  String get fontLabel;
+
+  /// No description provided for @customizeChatTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize Chat Theme'**
+  String get customizeChatTheme;
+
+  /// No description provided for @themeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Name'**
+  String get themeName;
+
+  /// No description provided for @custom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get custom;
+
+  /// No description provided for @backgroundColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Background Color'**
+  String get backgroundColor;
+
+  /// No description provided for @yourBubbleColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Bubble Color'**
+  String get yourBubbleColor;
+
+  /// No description provided for @othersBubbleColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Other\'s Bubble Color'**
+  String get othersBubbleColor;
+
+  /// No description provided for @yourTextColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Text Color'**
+  String get yourTextColor;
+
+  /// No description provided for @othersTextColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Other\'s Text Color'**
+  String get othersTextColor;
+
+  /// No description provided for @appBarColor.
+  ///
+  /// In en, this message translates to:
+  /// **'AppBar Color'**
+  String get appBarColor;
+
+  /// No description provided for @fontStyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Font Style'**
+  String get fontStyle;
+
+  /// No description provided for @applyTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Theme'**
+  String get applyTheme;
+
+  /// No description provided for @customRgb.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom RGB'**
+  String get customRgb;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @shonenCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Shonen (Custom)'**
+  String get shonenCustom;
+
+  /// No description provided for @otherUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Other user'**
+  String get otherUser;
+
+  /// No description provided for @folders.
+  ///
+  /// In en, this message translates to:
+  /// **'Folders'**
+  String get folders;
+
+  /// No description provided for @createFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Folder'**
+  String get createFolder;
+
+  /// No description provided for @folderName.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder name'**
+  String get folderName;
+
+  /// No description provided for @addUsersToFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Add users to folder'**
+  String get addUsersToFolder;
+
+  /// No description provided for @noUsersInFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'No users in folder'**
+  String get noUsersInFolder;
+
+  /// No description provided for @deleteFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete folder'**
+  String get deleteFolder;
+
+  /// No description provided for @deleteFolderConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this folder?'**
+  String get deleteFolderConfirm;
+
+  /// No description provided for @folderCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder created'**
+  String get folderCreated;
+
+  /// No description provided for @userAddedToFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'User added to folder'**
+  String get userAddedToFolder;
+
+  /// No description provided for @userRemovedFromFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'User removed from folder'**
+  String get userRemovedFromFolder;
 }
 
 class _AppLocalizationsDelegate

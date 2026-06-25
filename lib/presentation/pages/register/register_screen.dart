@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fumo/components/MyButton.dart';
 import 'package:fumo/components/MyIcon.dart';
 import 'package:fumo/components/MyTextField.dart';
+import 'package:fumo/extensions/context_extensions.dart';
 import 'package:fumo/presentation/blocs/auth/auth_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   @override void dispose() { _passwordController.dispose(); _confirmPasswordController.dispose(); _emailController.dispose(); super.dispose(); }
   void _register() {
-    if (_passwordController.text != _confirmPasswordController.text) { showDialog<void>(context: context, builder: (context) => const AlertDialog(title: Text("Password don't match "))); return; }
+    if (_passwordController.text != _confirmPasswordController.text) { showDialog<void>(context: context, builder: (context) => AlertDialog(title: Text(context.localizations.passwordDontMatch))); return; }
     context.read<AuthBloc>().add(AuthSignUpRequested(email: _emailController.text.trim(), password: _passwordController.text));
   }
   @override Widget build(BuildContext context) {
@@ -28,16 +29,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Myicon(gif: 'giphy (2).gif'),
           const SizedBox(height: 100),
-          Text('Create your account', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16)),
-          MyTextField(hintText: 'Login', Obscure: false, controller: _emailController),
+          Text(context.localizations.createYourAccount, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16)),
+          MyTextField(hintText: context.localizations.login, Obscure: false, controller: _emailController),
           const SizedBox(height: 5),
-          MyTextField(hintText: 'password', Obscure: true, controller: _passwordController),
+          MyTextField(hintText: context.localizations.password, Obscure: true, controller: _passwordController),
           const SizedBox(height: 5),
-          MyTextField(hintText: 'Confirm password', Obscure: true, controller: _confirmPasswordController),
-          Mybutton(inSideText: 'Sign Up', onTap: _register),
+          MyTextField(hintText: context.localizations.confirmPassword, Obscure: true, controller: _confirmPasswordController),
+          Mybutton(inSideText: context.localizations.signUp, onTap: _register),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(' Do you a member ?', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
-            GestureDetector(onTap: widget.onTap, child: Text(' Login ', style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary, fontWeight: FontWeight.bold))),
+            Text(' ${context.localizations.doYouMember}', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+            GestureDetector(onTap: widget.onTap, child: Text(' ${context.localizations.login} ', style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary, fontWeight: FontWeight.bold))),
           ]),
         ])),
       ),

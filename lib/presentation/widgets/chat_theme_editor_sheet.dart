@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fumo/core/theme/chat_theme_local_storage.dart';
 import 'package:fumo/domain/entities/chat_theme_entity.dart';
+import 'package:fumo/extensions/context_extensions.dart';
 
 class ChatThemeEditorSheet extends StatefulWidget {
   const ChatThemeEditorSheet({
@@ -63,7 +64,7 @@ class _ChatThemeEditorSheetState extends State<ChatThemeEditorSheet> {
                 ],
               ),
               const SizedBox(height: 16),
-              Text('Custom RGB', style: Theme.of(context).textTheme.bodySmall),
+              Text(context.localizations.customRgb, style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(height: 8),
               _ColorSlider(
                 label: 'R',
@@ -116,7 +117,7 @@ class _ChatThemeEditorSheetState extends State<ChatThemeEditorSheet> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Done'),
+            child: Text(context.localizations.done),
           ),
         ],
       ),
@@ -176,7 +177,7 @@ class _ChatThemeEditorSheetState extends State<ChatThemeEditorSheet> {
                 ),
               ),
               Text(
-                'Customize Chat Theme',
+                context.localizations.customizeChatTheme,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -187,15 +188,15 @@ class _ChatThemeEditorSheetState extends State<ChatThemeEditorSheet> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Theme Name',
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: InputDecoration(
+                    labelText: context.localizations.themeName,
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                   controller: TextEditingController(text: _editedTheme.themeName),
                   onChanged: (v) {
                     setState(() {
-                      _editedTheme = _editedTheme.copyWith(themeName: v.isEmpty ? 'Custom' : v);
+                      _editedTheme = _editedTheme.copyWith(themeName: v.isEmpty ? context.localizations.custom : v);
                     });
                   },
                 ),
@@ -207,61 +208,61 @@ class _ChatThemeEditorSheetState extends State<ChatThemeEditorSheet> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: [
                     _ColorOption(
-                      label: 'Background Color',
+                      label: context.localizations.backgroundColor,
                       color: _editedTheme.backgroundColor,
                       onTap: () => _pickColor(
-                        label: 'Background Color',
+                        label: context.localizations.backgroundColor,
                         currentColor: _editedTheme.backgroundColor,
                         onColorPicked: (c) => setState(() => _editedTheme = _editedTheme.copyWith(backgroundColor: c)),
                       ),
                     ),
                     _ColorOption(
-                      label: 'Your Bubble Color',
+                      label: context.localizations.yourBubbleColor,
                       color: _editedTheme.ownBubbleColor,
                       onTap: () => _pickColor(
-                        label: 'Your Bubble Color',
+                        label: context.localizations.yourBubbleColor,
                         currentColor: _editedTheme.ownBubbleColor,
                         onColorPicked: (c) => setState(() => _editedTheme = _editedTheme.copyWith(ownBubbleColor: c)),
                       ),
                     ),
                     _ColorOption(
-                      label: 'Other\'s Bubble Color',
+                      label: context.localizations.othersBubbleColor,
                       color: _editedTheme.otherBubbleColor,
                       onTap: () => _pickColor(
-                        label: "Other's Bubble Color",
+                        label: context.localizations.othersBubbleColor,
                         currentColor: _editedTheme.otherBubbleColor,
                         onColorPicked: (c) => setState(() => _editedTheme = _editedTheme.copyWith(otherBubbleColor: c)),
                       ),
                     ),
                     _ColorOption(
-                      label: 'Your Text Color',
+                      label: context.localizations.yourTextColor,
                       color: _editedTheme.ownTextColor,
                       onTap: () => _pickColor(
-                        label: 'Your Text Color',
+                        label: context.localizations.yourTextColor,
                         currentColor: _editedTheme.ownTextColor,
                         onColorPicked: (c) => setState(() => _editedTheme = _editedTheme.copyWith(ownTextColor: c)),
                       ),
                     ),
                     _ColorOption(
-                      label: 'Other\'s Text Color',
+                      label: context.localizations.othersTextColor,
                       color: _editedTheme.otherTextColor,
                       onTap: () => _pickColor(
-                        label: "Other's Text Color",
+                        label: context.localizations.othersTextColor,
                         currentColor: _editedTheme.otherTextColor,
                         onColorPicked: (c) => setState(() => _editedTheme = _editedTheme.copyWith(otherTextColor: c)),
                       ),
                     ),
                     _ColorOption(
-                      label: 'AppBar Color',
+                      label: context.localizations.appBarColor,
                       color: _editedTheme.appBarColor,
                       onTap: () => _pickColor(
-                        label: 'AppBar Color',
+                        label: context.localizations.appBarColor,
                         currentColor: _editedTheme.appBarColor,
                         onColorPicked: (c) => setState(() => _editedTheme = _editedTheme.copyWith(appBarColor: c)),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text('Font Style', style: Theme.of(context).textTheme.titleMedium),
+                    Text(context.localizations.fontStyle, style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 8),
                     ...ChatThemeEntity.availableFonts.map((font) => _FontOption(
                           fontFamily: font,
@@ -279,7 +280,7 @@ class _ChatThemeEditorSheetState extends State<ChatThemeEditorSheet> {
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text('Cancel'),
+                        child: Text(context.localizations.cancel),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -293,7 +294,7 @@ class _ChatThemeEditorSheetState extends State<ChatThemeEditorSheet> {
                           widget.onThemeApplied(_editedTheme);
                           Navigator.pop(context);
                         },
-                        child: const Text('Apply Theme'),
+                        child: Text(context.localizations.applyTheme),
                       ),
                     ),
                   ],
@@ -358,7 +359,7 @@ class _FontOption extends StatelessWidget {
       color: isSelected ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.2) : null,
       child: ListTile(
         title: Text(
-          fontFamily == 'Shonen' ? 'Shonen (Custom)' : fontFamily,
+          fontFamily == 'Shonen' ? context.localizations.shonenCustom : fontFamily,
           style: TextStyle(
             fontFamily: fontFamily,
             fontSize: 16,
@@ -441,7 +442,7 @@ class _ThemePreview extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
-                'Other user',
+                context.localizations.otherUser,
                 style: TextStyle(
                   color: theme.otherTextColor,
                   fontFamily: theme.fontFamily,
@@ -460,7 +461,7 @@ class _ThemePreview extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
-                'You',
+                context.localizations.you,
                 style: TextStyle(
                   color: theme.ownTextColor,
                   fontFamily: theme.fontFamily,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fumo/core/theme/chat_theme_provider.dart';
+import 'package:fumo/extensions/context_extensions.dart';
 
 class ChatBubble extends StatelessWidget {
   const ChatBubble({
@@ -36,10 +37,10 @@ class ChatBubble extends StatelessWidget {
         offset.dy + renderBox.size.height,
       ),
       items: [
-        const PopupMenuItem(value: 'copy', child: ListTile(leading: Icon(Icons.copy, size: 20), title: Text('Copy'), dense: true, contentPadding: EdgeInsets.zero)),
+        PopupMenuItem(value: 'copy', child: ListTile(leading: const Icon(Icons.copy, size: 20), title: Text(context.localizations.copy), dense: true, contentPadding: EdgeInsets.zero)),
         if (isCurrentUser) ...[
-          const PopupMenuItem(value: 'edit', child: ListTile(leading: Icon(Icons.edit, size: 20), title: Text('Edit'), dense: true, contentPadding: EdgeInsets.zero)),
-          const PopupMenuItem(value: 'delete', child: ListTile(leading: Icon(Icons.delete, size: 20, color: Colors.red), title: Text('Delete', style: TextStyle(color: Colors.red)), dense: true, contentPadding: EdgeInsets.zero)),
+          PopupMenuItem(value: 'edit', child: ListTile(leading: const Icon(Icons.edit, size: 20), title: Text(context.localizations.edit), dense: true, contentPadding: EdgeInsets.zero)),
+          PopupMenuItem(value: 'delete', child: ListTile(leading: const Icon(Icons.delete, size: 20, color: Colors.red), title: Text(context.localizations.delete, style: const TextStyle(color: Colors.red)), dense: true, contentPadding: EdgeInsets.zero)),
         ],
       ],
     ).then((value) {

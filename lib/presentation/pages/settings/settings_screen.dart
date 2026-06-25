@@ -33,7 +33,7 @@ class SettingsScreen extends StatelessWidget {
           ListTile(leading: const Icon(Icons.person), title: Text(context.localizations.profile), trailing: const Icon(Icons.chevron_right), onTap: () => _openProfile(context)),
           ListTile(
             leading: const Icon(Icons.palette),
-            title: const Text('Saved Themes'),
+            title: Text(context.localizations.savedThemes),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _openSavedThemes(context),
           ),
@@ -84,7 +84,7 @@ class _SavedThemesScreenState extends State<_SavedThemesScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Saved Themes'),
+        title: Text(context.localizations.savedThemes),
         backgroundColor: Theme.of(context).colorScheme.surface,
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,
@@ -101,7 +101,7 @@ class _SavedThemesScreenState extends State<_SavedThemesScreen> {
                         Icon(Icons.palette_outlined, size: 64, color: Colors.grey.shade400),
                         const SizedBox(height: 16),
                         Text(
-                          'No saved themes yet',
+                          context.localizations.noSavedThemes,
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.grey.shade600,
@@ -109,7 +109,7 @@ class _SavedThemesScreenState extends State<_SavedThemesScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Create a theme in any chat and it will appear here,\nor go to a chat and customize the theme there.',
+                          context.localizations.savedThemesHint,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey.shade500,
@@ -120,7 +120,7 @@ class _SavedThemesScreenState extends State<_SavedThemesScreen> {
                         FilledButton.icon(
                           onPressed: () => Navigator.pop(context),
                           icon: const Icon(Icons.chat),
-                          label: const Text('Go to a chat to create theme'),
+                          label: Text(context.localizations.goToChatCreateTheme),
                         ),
                       ],
                     ),
@@ -176,7 +176,7 @@ class _SavedThemesScreenState extends State<_SavedThemesScreen> {
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                         child: Text(
-                                          'Other',
+                                          context.localizations.other,
                                           style: TextStyle(
                                             color: theme.otherTextColor,
                                             fontFamily: theme.fontFamily,
@@ -195,7 +195,7 @@ class _SavedThemesScreenState extends State<_SavedThemesScreen> {
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                         child: Text(
-                                          'You',
+                                          context.localizations.you,
                                           style: TextStyle(
                                             color: theme.ownTextColor,
                                             fontFamily: theme.fontFamily,
@@ -210,7 +210,7 @@ class _SavedThemesScreenState extends State<_SavedThemesScreen> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Font: ${theme.fontFamily}',
+                              '${context.localizations.fontLabel}${theme.fontFamily}',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey.shade600,

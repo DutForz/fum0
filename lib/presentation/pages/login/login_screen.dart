@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fumo/components/MyButton.dart';
 import 'package:fumo/components/MyIcon.dart';
 import 'package:fumo/components/MyTextField.dart';
+import 'package:fumo/extensions/context_extensions.dart';
 import 'package:fumo/presentation/blocs/auth/auth_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,14 +25,14 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Myicon(gif: 'giphy.gif'),
           const SizedBox(height: 100),
-          Text("Welcome back", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16)),
-          MyTextField(hintText: 'Login', Obscure: false, controller: _emailController),
+          Text(context.localizations.welcomeBack, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16)),
+          MyTextField(hintText: context.localizations.login, Obscure: false, controller: _emailController),
           const SizedBox(height: 5),
-          MyTextField(hintText: 'password', Obscure: true, controller: _passwordController),
-          Mybutton(inSideText: 'Sign In', onTap: _login),
+          MyTextField(hintText: context.localizations.password, Obscure: true, controller: _passwordController),
+          Mybutton(inSideText: context.localizations.signIn, onTap: _login),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(' not a member ?', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
-            GestureDetector(onTap: widget.onTap, child: Text(' Register now', style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary, fontWeight: FontWeight.bold))),
+            Text(' ${context.localizations.notAMember}', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+            GestureDetector(onTap: widget.onTap, child: Text(' ${context.localizations.registerNow}', style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary, fontWeight: FontWeight.bold))),
           ]),
         ])),
       ),

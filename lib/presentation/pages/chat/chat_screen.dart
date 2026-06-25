@@ -174,7 +174,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   if (value == 'reset') {
                     final defaultTheme = ChatThemeEntity.defaultTheme();
                     if (_chatTheme == defaultTheme) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Already using default theme'), duration: Duration(seconds: 1)));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.localizations.alreadyDefaultTheme), duration: const Duration(seconds: 1)));
                       return;
                     }
                     setState(() => _chatTheme = defaultTheme);
@@ -182,8 +182,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   }
                 },
                 itemBuilder: (context) => [
-                  const PopupMenuItem(value: 'theme', child: ListTile(leading: Icon(Icons.palette), title: Text('Change Chat Theme'), dense: true)),
-                  const PopupMenuItem(value: 'reset', child: ListTile(leading: Icon(Icons.format_paint), title: Text('Reset Theme'), dense: true)),
+                  PopupMenuItem(value: 'theme', child: ListTile(leading: const Icon(Icons.palette), title: Text(context.localizations.changeChatTheme), dense: true)),
+                  PopupMenuItem(value: 'reset', child: ListTile(leading: const Icon(Icons.format_paint), title: Text(context.localizations.resetTheme), dense: true)),
                 ],
               ),
             ],
@@ -215,7 +215,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Row(children: [
                   Icon(Icons.edit, size: 16, color: _chatTheme.ownTextColor),
                   const SizedBox(width: 8),
-                  Expanded(child: Text('Editing message', style: TextStyle(fontSize: 12, color: _chatTheme.ownTextColor))),
+                  Expanded(child: Text(context.localizations.editingMessage, style: TextStyle(fontSize: 12, color: _chatTheme.ownTextColor))),
                   GestureDetector(onTap: _cancelEditing, child: Icon(Icons.close, size: 18, color: _chatTheme.ownTextColor)),
                 ]),
               ),
@@ -231,18 +231,18 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _copyMessage(String text) {
     Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Message copied to clipboard'), duration: Duration(seconds: 2)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.localizations.messageCopied), duration: const Duration(seconds: 2)));
   }
 
   void _deleteMessage(MessageEntity message) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete message'),
-        content: const Text('Are you sure you want to delete this message?'),
+        title: Text(context.localizations.deleteMessage),
+        content: Text(context.localizations.deleteMessageConfirm),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          TextButton(onPressed: () { Navigator.pop(ctx); if (message.id != null) { _chatBloc.add(ChatDeleteMessageRequested(message.id!)); } }, child: const Text('Delete', style: TextStyle(color: Colors.red))),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(context.localizations.cancel)),
+          TextButton(onPressed: () { Navigator.pop(ctx); if (message.id != null) { _chatBloc.add(ChatDeleteMessageRequested(message.id!)); } }, child: Text(context.localizations.delete, style: const TextStyle(color: Colors.red))),
         ],
       ),
     );
